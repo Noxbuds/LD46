@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
 	// Running force
 	public float runForce;
 
+	// Max running speed (units/sec)
+	public float runSpeed;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -70,8 +73,12 @@ public class PlayerController : MonoBehaviour
 
 			// If not, we want to move towards the target
 			// Normalize the direction vector and apply it
+			direction.y *= 0.0f; // don't want to climb up mountains too much
 			direction.Normalize();
-			rigidbody.AddForce(direction * runForce * Time.deltaTime); // multiply by delta time to have consistent run speed
+
+			// Limit speed
+			if (rigidbody.velocity.sqrMagnitude < runSpeed)
+				rigidbody.AddForce(direction * runForce * Time.deltaTime); // multiply by delta time to have consistent run speed
 
 			// Setup a look target
 			Vector3 lookTarget = target;

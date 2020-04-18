@@ -54,7 +54,7 @@ public class SheepController : MonoBehaviour
 		if (target == null)
 		{
 			// Fetch all targets
-			SheepMischiefMarker[] markers = GameObject.FindObjectsOfType<SheepMischiefMarker>();
+			SheepMischiefMarker[] markers = FindObjectOfType<SheepManager>().markers;// GameObject.FindObjectsOfType<SheepMischiefMarker>();
 
 			// Pick a random one
 			int targetID = Random.Range(0, markers.Length);

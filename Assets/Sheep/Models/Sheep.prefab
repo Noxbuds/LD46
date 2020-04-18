@@ -529,7 +529,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688560632714970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.74, y: 3.431, z: 1.48}
+  m_LocalPosition: {x: 19.93, y: 5.67, z: -14.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4559196694885556}
@@ -786,7 +786,7 @@ MonoBehaviour:
   target: {fileID: 0}
   runForce: 750
   body: {fileID: 1210993011226112}
-  scaredRadius: 3
+  scaredRadius: 4
   totalScaredTime: 3
   animator: {fileID: 114976598254553192}
 --- !u!114 &114976598254553192
