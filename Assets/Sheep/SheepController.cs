@@ -75,6 +75,9 @@ public class SheepController : MonoBehaviour
 			{
 				// Set scared timer
 				scaredTimer = totalScaredTime;
+
+				// Start running
+				animator.StartRunning();
 			}
 
 			// Check if the sheep is currently scared
@@ -99,13 +102,6 @@ public class SheepController : MonoBehaviour
 				// Don't add force if we are going too fast
 				rigidbody.AddForce(direction * Time.deltaTime * runForce);
 
-				// Create a point to look at
-				/*Vector3 lookTarget = target.transform.position;
-				lookTarget.y = transform.position.y;
-
-				// Look at the target
-				body.transform.LookAt(lookTarget);*/
-
 				// Set up a 'look target' and force its Y position to this sheep's Y position for correct angles
 				Vector3 lookTarget = transform.position + direction;
 				lookTarget.y = transform.position.y;
@@ -123,6 +119,14 @@ public class SheepController : MonoBehaviour
 				{
 					// Go to next location
 					target = target.nextLocation;
+
+					// Start running
+					animator.StartRunning();
+				}
+				else
+				{
+					// Pick new location
+					//target = null;
 				}
 			}
 		}

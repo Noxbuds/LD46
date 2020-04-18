@@ -11,3 +11,5 @@ Sheep herding simulator
 - Herd the sheep away from the fences
 
 - Chase foxes and wolves away
+
+- Different sheep colors

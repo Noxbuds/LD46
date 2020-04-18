@@ -787,7 +787,7 @@ MonoBehaviour:
   runForce: 750
   body: {fileID: 1210993011226112}
   scaredRadius: 3
-  totalScaredTime: 5
+  totalScaredTime: 3
   animator: {fileID: 114976598254553192}
 --- !u!114 &114976598254553192
 MonoBehaviour:
