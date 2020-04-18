@@ -57,6 +57,7 @@ public class SheepManager : MonoBehaviour
 
 			// Position the sheep somewhere in the arena
 			Vector3 position = RandomPosition(sheepSpawnArea.transform.position + sheepSpawnArea.center, sheepSpawnArea.size);
+			newSheep.transform.position = position;
 
 			// Parent the sheep to this
 			newSheep.transform.SetParent(transform);

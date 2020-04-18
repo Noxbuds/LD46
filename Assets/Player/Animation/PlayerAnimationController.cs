@@ -5,17 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimationController : MonoBehaviour
 {
+	// Target run speed
+	public float targetRunSpeed;
+
 	// The animator
 	private Animator animator;
 
 	// Whether the dog is running
 	private bool isRunning;
 
+	// Reference to the rigidbody
+	public new Rigidbody rigidbody;
+
 	/// <summary>
 	///	Sets the running trigger 
 	/// </summary>
 	public void StartRunning()
 	{
+		animator.ResetTrigger("Stop");
 		if (!isRunning)
 		{
 			// Set the trigger
@@ -31,6 +38,7 @@ public class PlayerAnimationController : MonoBehaviour
 	/// </summary>
 	public void StopRunning()
 	{
+		animator.ResetTrigger("Run");
 		if (isRunning)
 		{
 			// Set the trigger
@@ -51,6 +59,7 @@ public class PlayerAnimationController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		
+		// Set run speed
+		animator.SetFloat("Run Speed", rigidbody.velocity.magnitude / targetRunSpeed);
 	}
 }

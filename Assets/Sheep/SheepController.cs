@@ -24,6 +24,9 @@ public class SheepController : MonoBehaviour
 	// Max run force
 	public float runForce;
 
+	// Turn speed
+	public float turnSpeed;
+
 	// The sheep's body
 	public GameObject body;
 
@@ -32,6 +35,9 @@ public class SheepController : MonoBehaviour
 
 	// The time (in seconds) that the sheep will be scared for
 	public float totalScaredTime;
+
+	// The square of the distance where a sheep will be satisfied with a marker
+	public float sqrSatisfiedDistance;
 
 	[Header("Animation")]
 	// Used to control the sheep's animations
@@ -78,6 +84,9 @@ public class SheepController : MonoBehaviour
 
 				// Start running
 				animator.StartRunning();
+
+				// Trigger a bark
+				FindObjectOfType<DogBarkController>().TriggerBark();
 			}
 
 			// Check if the sheep is currently scared
@@ -93,21 +102,30 @@ public class SheepController : MonoBehaviour
 				direction = target.transform.position - transform.position;
 			}
 
+			// Calculate distance to target
+			float distance = direction.sqrMagnitude;
+
 			// Go to target if we aren't there already
-			if (direction.sqrMagnitude > 1)
+			if (distance > sqrSatisfiedDistance)
 			{
 				// Normalize vector and move towards it
 				direction.Normalize();
 
 				// Don't add force if we are going too fast
-				rigidbody.AddForce(direction * Time.deltaTime * runForce);
+				rigidbody.AddForce(body.transform.forward * Time.deltaTime * runForce);
 
 				// Set up a 'look target' and force its Y position to this sheep's Y position for correct angles
 				Vector3 lookTarget = transform.position + direction;
 				lookTarget.y = transform.position.y;
 
-				// Look in our move direction
-				body.transform.LookAt(lookTarget);
+				// Target position
+				Vector3 currentTarget = transform.position + body.transform.forward * distance;
+
+				// Point to look at
+				Vector3 lookPoint = Vector3.Lerp(currentTarget, lookTarget, Time.deltaTime * turnSpeed);
+
+				// Set rotation
+				body.transform.LookAt(lookPoint);
 			}
 			else
 			{

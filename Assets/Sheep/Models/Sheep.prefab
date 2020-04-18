@@ -80,7 +80,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4216320501738614}
   - component: {fileID: 95108056821933726}
-  - component: {fileID: 65534269440135060}
   - component: {fileID: 114976598254553192}
   m_Layer: 0
   m_Name: sheep
@@ -283,6 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4221157279669880}
   - component: {fileID: 137970423363932508}
+  - component: {fileID: 136709611857206212}
   m_Layer: 0
   m_Name: Sheep_Body
   m_TagString: Untagged
@@ -529,7 +529,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688560632714970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.93, y: 5.67, z: -14.94}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4559196694885556}
@@ -742,18 +742,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65534269440135060
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1210993011226112}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.46, y: 3.29, z: 5}
-  m_Center: {x: 0, y: -0.45, z: -0.74}
 --- !u!95 &95108056821933726
 Animator:
   serializedVersion: 3
@@ -785,9 +773,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   runForce: 750
+  turnSpeed: 30
   body: {fileID: 1210993011226112}
-  scaredRadius: 4
+  scaredRadius: 8
   totalScaredTime: 3
+  sqrSatisfiedDistance: 16
   animator: {fileID: 114976598254553192}
 --- !u!114 &114976598254553192
 MonoBehaviour:
@@ -817,6 +807,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136709611857206212
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1721103643740068}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.55
+  m_Height: 6.5162187
+  m_Direction: 1
+  m_Center: {x: -0.00000032397634, y: -0.81756777, z: 1.3533992}
 --- !u!137 &137970423363932508
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
 	// Max running speed (units/sec)
 	public float runSpeed;
 
+	// Turning speed multiplier
+	public float turnSpeed;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -47,7 +50,7 @@ public class PlayerController : MonoBehaviour
 	void Update ()
 	{
 		// Check for click
-		if (Input.GetMouseButton(0))
+		if (Input.GetMouseButton(0) && Time.time > 0.1f)
 		{
 			// Get the target screen position
 			Vector3 screenTarget = Input.mousePosition;
@@ -65,19 +68,25 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// Move if we have a target
-		if (target != null)
+		if (!target.Equals(Vector3.zero))
 		{
 			// Get a vector from our position to the target position
 			Vector3 direction = target - transform.position;
 
+			// Calculate distance to target
+			float distance = direction.sqrMagnitude;
+
 			// Check if we are at the target already
-			if (direction.sqrMagnitude > 1)
+			if (distance > 1)
 			{
 
 				// If not, we want to move towards the target
 				// Normalize the direction vector and apply it
 				direction.y *= 0.0f; // don't want to climb up mountains too much
 				direction.Normalize();
+
+				// set direction to forward vector
+				direction = body.transform.forward;
 
 				// Limit speed
 				if (rigidbody.velocity.sqrMagnitude < runSpeed)
@@ -86,10 +95,16 @@ public class PlayerController : MonoBehaviour
 				// Setup a look target
 				Vector3 lookTarget = target;
 				lookTarget.y = transform.position.y;
+				
+				// Target position
+				Vector3 currentTarget = transform.position + body.transform.forward * distance;
 
-				// Apply the direction
-				body.transform.LookAt(lookTarget);
+				// Point to look at
+				Vector3 lookPoint = Vector3.Lerp(currentTarget, lookTarget, Time.deltaTime * turnSpeed);
 
+				// Set rotation
+				body.transform.LookAt(lookPoint);
+				
 				// Do running animation
 				animator.StartRunning();
 			}
