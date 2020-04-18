@@ -4,3 +4,10 @@ Ludum Dare 46
 Sheep herding simulator
 - "Sheep Hate Fences"?
 
+- Top-down / diagonal 3D
+
+- Play as a sheep dog
+
+- Herd the sheep away from the fences
+
+- Chase foxes and wolves away
