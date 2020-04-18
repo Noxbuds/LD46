@@ -18,10 +18,12 @@ public class PlayerController : MonoBehaviour
 	// The terrain
 	public Terrain terrain;
 
-	public GameObject targetMarker;
-
 	// The rigidbody attached to the player
 	private new Rigidbody rigidbody; // using 'new' here to hide Component.rigidbody, which is more finnicky to work with
+
+	// The animation controller
+	[SerializeField] // read-only in editor
+	private PlayerAnimationController animator;
 
 	[Header("Player properties")]
 	// Running force
@@ -44,8 +46,6 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		targetMarker.transform.position = target;
-
 		// Check for click
 		if (Input.GetMouseButton(0))
 		{
@@ -64,33 +64,43 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		// Get a vector from our position to the target position
-		Vector3 direction = target - transform.position;
-
-		// Check if we are at the target already
-		if (direction.sqrMagnitude > 1)
+		// Move if we have a target
+		if (target != null)
 		{
+			// Get a vector from our position to the target position
+			Vector3 direction = target - transform.position;
 
-			// If not, we want to move towards the target
-			// Normalize the direction vector and apply it
-			direction.y *= 0.0f; // don't want to climb up mountains too much
-			direction.Normalize();
+			// Check if we are at the target already
+			if (direction.sqrMagnitude > 1)
+			{
 
-			// Limit speed
-			if (rigidbody.velocity.sqrMagnitude < runSpeed)
-				rigidbody.AddForce(direction * runForce * Time.deltaTime); // multiply by delta time to have consistent run speed
+				// If not, we want to move towards the target
+				// Normalize the direction vector and apply it
+				direction.y *= 0.0f; // don't want to climb up mountains too much
+				direction.Normalize();
 
-			// Setup a look target
-			Vector3 lookTarget = target;
-			lookTarget.y = transform.position.y;
+				// Limit speed
+				if (rigidbody.velocity.sqrMagnitude < runSpeed)
+					rigidbody.AddForce(direction * runForce * Time.deltaTime); // multiply by delta time to have consistent run speed
 
-			// Apply the direction
-			body.transform.LookAt(lookTarget);
-		}
-		else
-		{
-			// Once we reach the target, stop
-			target = transform.position;
+				// Setup a look target
+				Vector3 lookTarget = target;
+				lookTarget.y = transform.position.y;
+
+				// Apply the direction
+				body.transform.LookAt(lookTarget);
+
+				// Do running animation
+				animator.StartRunning();
+			}
+			else
+			{
+				// Once we reach the target, stop
+				target = transform.position;
+
+				// Stop running
+				animator.StopRunning();
+			}
 		}
 	}
 }
