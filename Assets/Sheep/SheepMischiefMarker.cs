@@ -10,11 +10,14 @@ public class SheepMischiefMarker : MonoBehaviour
 	// Mischief type
 	public enum MischiefType
 	{
-		Low_Fence, Broken_Fence
+		Low_Fence, Broken_Fence, Nice_Grass, Busy_Road
 	}
 
 	// This marker's type
 	public MischiefType type;
+
+	// The next location to go to (optional)
+	public SheepMischiefMarker nextLocation;
 
 	// Use this for initialization
 	void Start ()

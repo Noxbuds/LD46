@@ -33,6 +33,10 @@ public class SheepController : MonoBehaviour
 	// The time (in seconds) that the sheep will be scared for
 	public float totalScaredTime;
 
+	[Header("Animation")]
+	// Used to control the sheep's animations
+	public SheepAnimationControl animator;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -57,6 +61,9 @@ public class SheepController : MonoBehaviour
 
 			// Select this target
 			target = markers[targetID];
+
+			// Start running
+			animator.StartRunning();
 		}
 		else
 		{
@@ -99,8 +106,24 @@ public class SheepController : MonoBehaviour
 				// Look at the target
 				body.transform.LookAt(lookTarget);*/
 
+				// Set up a 'look target' and force its Y position to this sheep's Y position for correct angles
+				Vector3 lookTarget = transform.position + direction;
+				lookTarget.y = transform.position.y;
+
 				// Look in our move direction
-				body.transform.LookAt(transform.position + direction);
+				body.transform.LookAt(lookTarget);
+			}
+			else
+			{
+				// Stop running and idle
+				animator.StopRunning();
+
+				// Check for next location
+				if (target.nextLocation != null)
+				{
+					// Go to next location
+					target = target.nextLocation;
+				}
 			}
 		}
 	}

@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: 3d5dd043b00273248b0dd8c8231b27d6
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Back_Left_Leg_1
+    100002: Back_Left_Leg_2
+    100004: Back_Right_Leg_1
+    100006: Back_Right_Leg_2
+    100008: Front_Left_Leg
+    100010: Front_Left_Shoulder
+    100012: Front_Right_Leg
+    100014: Front_Right_Shoulder
+    100016: Head
+    100018: Neck
+    100020: //RootNode
+    100022: Sheep_Body
+    100024: Skeleton
+    100026: Spine_1
+    100028: Spine_2
+    100030: Spine_3
+    100032: Spine_4
+    100034: Tail
+    400000: Back_Left_Leg_1
+    400002: Back_Left_Leg_2
+    400004: Back_Right_Leg_1
+    400006: Back_Right_Leg_2
+    400008: Front_Left_Leg
+    400010: Front_Left_Shoulder
+    400012: Front_Right_Leg
+    400014: Front_Right_Shoulder
+    400016: Head
+    400018: Neck
+    400020: //RootNode
+    400022: Sheep_Body
+    400024: Skeleton
+    400026: Spine_1
+    400028: Spine_2
+    400030: Spine_3
+    400032: Spine_4
+    400034: Tail
+    2100000: Material__sheep_texture_png
+    4300000: Sheep_Body
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: Sheep_Body
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
