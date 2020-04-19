@@ -7,8 +7,12 @@ public class SheepManager : MonoBehaviour
 	// This keeps track of all the sheep and provides some utilities for sheep
 
 	// The sheep alive
-	private List<SheepController> sheep;
-	
+	private List<SheepController> sheepList;
+
+	// Lost sheep and the time they have before they are completely lost
+	private List<SheepController> lostSheep;
+	private List<float> lostSheepTimers;
+
 	[Header("Sheep things")]
 	// The sheep prefab
 	public GameObject sheepPrefab;
@@ -21,6 +25,21 @@ public class SheepManager : MonoBehaviour
 
 	// The area that sheep can spawn in
 	public BoxCollider sheepSpawnArea;
+
+	// How much time the player has to rescue a sheep
+	public float sheepRescueTime;
+
+	// How many sheep remaining leads to a game over
+	public int minimumSheep;
+
+	/// <summary>
+	/// Gets the current number of sheep
+	/// </summary>
+	/// <returns>The current number of sheep</returns>
+	public int GetCurrentSheepCount()
+	{
+		return sheepList.Count;
+	}
 
 	/// <summary>
 	/// Generates a random position within a bounding box
@@ -43,11 +62,55 @@ public class SheepManager : MonoBehaviour
 		return new Vector3(x, y, z);
 	}
 
+	/// <summary>
+	/// Called when a sheep gets out of the enclosure
+	/// </summary>
+	/// <param name="sheep">The sheep that got out</param>
+	public void SheepLost(SheepController sheep)
+	{
+		// Remove from sheep list
+		sheepList.Remove(sheep);
+
+		// Add the sheep to the lost sheep list
+		lostSheep.Add(sheep);
+
+		// Add a new timer
+		lostSheepTimers.Add(sheepRescueTime);
+	}
+
+	/// <summary>
+	/// Removes a lost sheep from the world
+	/// </summary>
+	/// <param name="sheep">The sheep to remove</param>
+	public void RemoveSheep(SheepController sheep)
+	{
+		// Fetch index of the sheep
+		int id = lostSheep.IndexOf(sheep);
+
+		// If we have a valid ID, continue
+		if (id >= 0)
+		{
+			// Remove sheep from lists
+			lostSheep.Remove(sheep);
+			lostSheepTimers.RemoveAt(id);
+
+			// Notify
+			Debug.Log("Sheep is lost");
+
+			// Destroy sheep object
+			Destroy(sheep.gameObject);
+		}
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
 		// Set up sheep list
-		sheep = new List<SheepController>();
+		sheepList = new List<SheepController>();
+
+		// Set up lost sheep lists
+		lostSheep = new List<SheepController>();
+		lostSheepTimers = new List<float>();
 
 		// Create each sheep
 		for (int i = 0; i < sheepStartCount; i++)
@@ -64,13 +127,28 @@ public class SheepManager : MonoBehaviour
 
 			// Fetch sheep controller and add it to the list
 			SheepController controller = newSheep.GetComponent<SheepController>();
-			sheep.Add(controller);
+			sheepList.Add(controller);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		
+		// Decrement lost sheep timers
+		for (int i = 0; i < lostSheepTimers.Count; i++)
+		{
+			// Decrement timer
+			lostSheepTimers[i] -= Time.deltaTime;
+
+			// If the timer has reached zero, get rid of the sheep
+			if (lostSheepTimers[i] < 0)
+				RemoveSheep(lostSheep[i]);
+		}
+
+		// If we reach minimum sheep, trigger game over
+		if (sheepList.Count <= minimumSheep)
+		{
+			FindObjectOfType<GameController>().TriggerGameOver();
+		}
 	}
 }

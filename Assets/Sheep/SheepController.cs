@@ -12,6 +12,7 @@ public class SheepController : MonoBehaviour
 	// When the sheep is interrupted by the dog (player), it will have a 'scared' timer
 	// During this time it will focus on just running away from the dog, and won't pick
 	// a new target until the timer is over
+	[SerializeField]
 	private float scaredTimer;
 
 	// The sheep's rigidbody. Hide Component.rigidbody, as we want to have more control
@@ -39,9 +40,50 @@ public class SheepController : MonoBehaviour
 	// The square of the distance where a sheep will be satisfied with a marker
 	public float sqrSatisfiedDistance;
 
+	[Header("Sound")]
+	public AudioSource[] sounds;
+
+	// Sound interval
+	private float soundTimer;
+	public float soundInterval;
+
 	[Header("Animation")]
 	// Used to control the sheep's animations
 	public SheepAnimationControl animator;
+
+	/// <summary>
+	/// Selects a new target
+	/// </summary>
+	private void SelectNewTarget()
+	{
+		// Fetch all targets
+		SheepMischiefMarker[] markers = FindObjectOfType<SheepManager>().markers;
+
+		// Pick a random one
+		int targetID = Random.Range(0, markers.Length);
+
+		// Select this target
+		target = markers[targetID];
+	}
+
+	/// <summary>
+	/// Triggers a random sheep sound
+	/// </summary>
+	private void TriggerSound()
+	{
+		// Pick random sound
+		int soundID = Random.Range(0, sounds.Length);
+
+		// Play the sound if it isn't already playing
+		if (!sounds[soundID].isPlaying && soundTimer <= 0)
+		{
+			// Play the sound
+			sounds[soundID].Play();
+
+			// Set sound interval
+			soundTimer = soundInterval;
+		}
+	}
 
 	// Use this for initialization
 	void Start ()
@@ -56,24 +98,23 @@ public class SheepController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		// Decrement sound timer
+		soundTimer -= Time.deltaTime;
+
 		// Check if no target is set
 		if (target == null)
 		{
-			// Fetch all targets
-			SheepMischiefMarker[] markers = FindObjectOfType<SheepManager>().markers;// GameObject.FindObjectsOfType<SheepMischiefMarker>();
-
-			// Pick a random one
-			int targetID = Random.Range(0, markers.Length);
-
-			// Select this target
-			target = markers[targetID];
+			// Select new target
+			SelectNewTarget();
 
 			// Start running
 			animator.StartRunning();
 		}
 		else
 		{
-			// Set the target direction to the direction from the player to this sheep
+			// If the sheep is not scared, we will set this to a vector pointing towards the target
+			// By default we will handle the case where the sheep is scared. In this case, we want the sheep
+			// to run away from the dog, but also to not run out of the fence
 			Vector3 direction = transform.position - player.transform.position;
 
 			// Check if the player is near
@@ -81,6 +122,9 @@ public class SheepController : MonoBehaviour
 			{
 				// Set scared timer
 				scaredTimer = totalScaredTime;
+
+				// Play a 'baaa' sound
+				TriggerSound();
 
 				// Start running
 				animator.StartRunning();
@@ -94,6 +138,9 @@ public class SheepController : MonoBehaviour
 			{
 				// Decrement timer
 				scaredTimer -= Time.deltaTime;
+
+				// Select new target
+				SelectNewTarget();
 			}
 			else
 			{
@@ -127,10 +174,14 @@ public class SheepController : MonoBehaviour
 				// Set rotation
 				body.transform.LookAt(lookPoint);
 			}
-			else
+			// Only stop if the sheep is not scared
+			else if (scaredTimer <= 0)
 			{
 				// Stop running and idle
 				animator.StopRunning();
+
+				// Play a sound to show that the sheep is satisfied
+				TriggerSound();
 
 				// Check for next location
 				if (target.nextLocation != null)

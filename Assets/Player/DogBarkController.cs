@@ -20,8 +20,8 @@ public class DogBarkController : MonoBehaviour
 	// The offset to place barks at
 	public Vector3 barkOffset;
 
-	// The bark sound
-	public AudioSource barkSound;
+	// The bark sounds
+	public AudioSource[] barkSounds;
 
 	/// <summary>
 	/// Makes the dog bark
@@ -41,9 +41,9 @@ public class DogBarkController : MonoBehaviour
 			barkTimer = barkInterval;
 			newBark.GetComponent<BarkController>().despawnTimer = 0.8f;
 
-			// Play the sound
-			if (barkSound != null)
-				barkSound.Play();
+			// Pick a bark sound and play it
+			int barkID = Random.Range(0, barkSounds.Length);
+			barkSounds[barkID].Play();
 		}
 	}
 

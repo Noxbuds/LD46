@@ -67,8 +67,8 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		// Move if we have a target
-		if (!target.Equals(Vector3.zero))
+		// Move if we have a target and the player is clicking
+		if (!target.Equals(Vector3.zero) && Input.GetMouseButton(0))
 		{
 			// Get a vector from our position to the target position
 			Vector3 direction = target - transform.position;
@@ -111,11 +111,13 @@ public class PlayerController : MonoBehaviour
 			else
 			{
 				// Once we reach the target, stop
-				target = transform.position;
-
-				// Stop running
-				animator.StopRunning();
+				target = Vector3.zero;
 			}
+		}
+		else
+		{
+			// Stop running
+			animator.StopRunning();
 		}
 	}
 }
