@@ -13,3 +13,10 @@ Sheep herding simulator
 - Chase foxes and wolves away
 
 - Different sheep colors
+
+
+
+Servers and Sockets
+- have multiple servers
+- servers earn ad revenue
+- servers overloaded due to everyone working from home
